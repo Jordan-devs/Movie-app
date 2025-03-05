@@ -36,7 +36,8 @@ const App = () => {
     [searchTerm]
   );
 
-  const fetchMovies = async (query = "", newPage) => {
+  const fetchMovies = async (query = "", newPage, e) => {
+    e && e.preventDefault();
     setIsLoading(true);
     setError("");
     try {
@@ -55,7 +56,6 @@ const App = () => {
       }
 
       const data = await response.json();
-      console.log(data);
 
       if (data.Response === "False") {
         setError(data.Error || "Failed to fetch movies.");
@@ -129,11 +129,17 @@ const App = () => {
             Find <span className="text-gradient">Movies</span> You'll Enjoy
             without the Hassle
           </h1>
-          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <Search
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            fetchMovies={fetchMovies}
+          />
         </header>
 
         {trendLoading ? (
           <Spinner />
+        ) : debounceSearchTerm !== "" ? (
+          ""
         ) : (
           trendingMovies.length > 0 && (
             <section className="trending">
@@ -157,6 +163,10 @@ const App = () => {
             <Spinner />
           ) : error ? (
             <p className="text-red-500">{error}</p>
+          ) : data.results.length === 0 ? (
+            <p className="text-[1.3rem] text-white text-center">
+              Movie not Found
+            </p>
           ) : (
             <ul>
               {movieList.map((movie) => (
