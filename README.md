@@ -7,9 +7,9 @@ A modern movie discovery app where users can explore trending movies, watch trai
 - 🔥 Browse **popular & top-rated** movies
 - 🎥 Watch **movie trailers**
 - 🔎 Search for movies by title
-- 📌 Save favorites for later
+- 📌 custom trending algoruthm throungh users search
 
 ## 🛠 Tech Stack
 
 - **Frontend**: React, Tailwind CSS
-- **Backend & Database**: Appwrite
+- **Trending algorithm**: Appwrite
