@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Search from "./Components/Search";
 import Spinner from "./Components/Spinner";
 import MovieCard from "./Components/MovieCard";
@@ -36,8 +36,7 @@ const App = () => {
     [searchTerm]
   );
 
-  const fetchMovies = async (query = "", newPage, e) => {
-    e && e.preventDefault();
+  const fetchMovies = async (query = "", newPage = 1) => {
     setIsLoading(true);
     setError("");
     try {
@@ -89,7 +88,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetchMovies(debounceSearchTerm);
+    setPageNumber(1);
+    fetchMovies(debounceSearchTerm, 1);
   }, [debounceSearchTerm]);
 
   useEffect(() => {
@@ -103,6 +103,9 @@ const App = () => {
         fetchMovies(debounceSearchTerm, newPage);
         return newPage;
       });
+      setTimeout(() => {
+        handleScroll();
+      }, 1000);
     }
   };
 
@@ -113,7 +116,16 @@ const App = () => {
         fetchMovies(debounceSearchTerm, newPage);
         return newPage;
       });
+      setTimeout(() => {
+        handleScroll();
+      }, 1000);
     }
+  };
+
+  const movieListRef = useRef(null);
+
+  const handleScroll = () => {
+    movieListRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -157,7 +169,7 @@ const App = () => {
           )
         )}
 
-        <section className="all-movies">
+        <section className="all-movies" ref={movieListRef}>
           <h2 className="mt-[40px]">Popular movies</h2>
           {isLoading ? (
             <Spinner />
