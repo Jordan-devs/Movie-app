@@ -163,7 +163,7 @@ const App = () => {
             <Spinner />
           ) : error ? (
             <p className="text-red-500">{error}</p>
-          ) : data.results.length === 0 ? (
+          ) : data?.results?.length === 0 ? (
             <p className="text-[1.3rem] text-white text-center">
               Movie not Found
             </p>
