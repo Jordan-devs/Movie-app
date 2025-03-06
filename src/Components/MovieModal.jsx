@@ -99,7 +99,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
                 ></iframe>
               ) : (
                 <img
-                  className="object-cover w-full h-full rounded-md"
+                  className="object-cover w-full min-sm:h-[440px] h-full rounded-md"
                   src={
                     backdrop_path
                       ? `https://image.tmdb.org/t/p/w500/${backdrop_path}`
