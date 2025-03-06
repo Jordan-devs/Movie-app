@@ -137,7 +137,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
           {/* movie details */}
 
           <div className="movie-details mt-[2.3rem]">
-            <div className="flex xs:items-center genre gap-[3rem] w-full relative max-[480px]:mb-[8rem]">
+            <div className="flex xs:items-center genre gap-[3rem] w-full relative max-[480px]:mb-[8.8rem]">
               <h3 className="text-[1.15rem] text-light-200">Genres</h3>
               <p className="text-light-200 left-[8rem] absolute">
                 {convertGenres(genre_ids).map((genre, index) => (
