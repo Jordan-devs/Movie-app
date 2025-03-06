@@ -89,10 +89,10 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
               }
               alt={title}
             />
-            <div className="w-full aspect-video rounded-md">
+            <div className="w-full h-[440px]max-sm:aspect-video rounded-md">
               {trailerUrl ? (
                 <iframe
-                  className="w-full h-full rounded-md"
+                  className="w-full min-sm:h-[440px] rounded-md h-full"
                   src={trailerUrl}
                   title={title}
                   allowFullScreen
