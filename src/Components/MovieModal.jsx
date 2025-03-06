@@ -53,7 +53,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* modal header  */}
-        <div className="modal-header flex-wrap">
+        <div className="modal-header flex-wrap gap-2">
           <h2>{title}</h2>
           <div className="flex items-center justify-center gap-[10px]">
             <div className="flex items-center justify-center px-[16px] py-[8px] bg-[#221F3D] rounded-md">
@@ -137,9 +137,9 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
           {/* movie details */}
 
           <div className="movie-details mt-[2.3rem]">
-            <div className="flex xs:items-center genre gap-[3rem] w-full relative max-[480px]:mb-[8.8rem]">
+            <div className="flex max-xs:flex-col xs:items-center genre gap-[3rem] max-xs:gap-2 w-full relative max-xs:mb-[2rem]">
               <h3 className="text-[1.15rem] text-light-200">Genres</h3>
-              <p className="text-light-200 left-[8rem] absolute">
+              <p className="text-light-200 left-[8rem] min-xs:absolute">
                 {convertGenres(genre_ids).map((genre, index) => (
                   <span
                     key={index}
@@ -169,27 +169,27 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
 
             {/* overview */}
 
-            <div className="flex  genre gap-[3rem] w-full relative mt-7 max-xs:mb-[28rem]">
+            <div className="flex max-xs:flex-col genre gap-[1rem] w-full relative mt-7 max-xs:mb-[1rem]">
               <h3 className="text-[1.15rem] text-light-200">Overview</h3>
-              <p className="text-light-200 w-[75%] max-xs:w-[60%] text-[1.1rem] absolute left-[8rem]">
+              <p className="text-light-200 w-[75%] max-xs:w-[100%] text-[1.1rem] min-xs:absolute left-[8rem]">
                 {overview ? overview : "No overview available for this movie"}
               </p>
             </div>
 
             {/* release_date */}
 
-            <div className="flex  genre gap-[3rem] w-full relative mt-[5.5rem] max-[888px]:mt-[8.8rem]">
+            <div className="flex max-xs:flex-col genre gap-[1rem] w-full relative mt-[5.5rem] max-[888px]:mt-[8.8rem] max-xs:mt-[2rem]">
               <h3 className="text-[1.15rem] text-light-200">Release date</h3>
-              <p className="text-light-200 w-[60%] text-[1.1rem] absolute left-[8rem]">
+              <p className="text-light-200 w-[60%] max-sm:w-full text-[1.1rem] min-xs:absolute left-[8rem]">
                 {release_date ? release_date : "N/A"} (Worldwide)
               </p>
             </div>
 
             {/* countries */}
 
-            <div className="flex  genre gap-[3rem] w-full relative mt-5 max-sm:mt-8">
+            <div className="flex max-xs:flex-col genre gap-[1rem] w-full relative mt-5 max-sm:mt-[2rem]">
               <h3 className="text-[1.15rem] text-light-200">Countries</h3>
-              <p className="text-light-200 w-[60%] text-[1.1rem] absolute left-[8rem]">
+              <p className="text-light-200 w-[60%] max-xs:w-full text-[1.1rem] min-xs:absolute left-[8rem]">
                 United Stated {"-•-"} Canada {"-•-"} UAE {"-•-"} Hungary {"-•-"}
                 Italy {"-•-"} New Zealand
               </p>
@@ -197,7 +197,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
 
             {/* status */}
 
-            <div className="flex  genre gap-[3rem] w-full relative mt-5 max-xs:mt-20">
+            <div className="flex  genre gap-[3rem] w-full relative mt-5 max-xs:mt-[2rem]">
               <h3 className="text-[1.15rem] text-light-200">Status</h3>
               <p className="text-light-200 w-[60%] text-[1.1rem] absolute left-[8rem]">
                 Released
@@ -206,7 +206,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
 
             {/* original_language */}
 
-            <div className="flex  genre gap-[3rem] w-full relative mt-5 mb-[30px]">
+            <div className="flex  genre gap-[3rem] w-full relative mt-[2rem] mb-[30px]">
               <h3 className="text-[1.15rem] text-light-200">Language</h3>
               <p className="text-light-200 w-[60%] text-[1.1rem] absolute left-[8rem]">
                 {original_language ? original_language.toUpperCase() : "N/A"}
