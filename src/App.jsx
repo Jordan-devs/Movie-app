@@ -4,6 +4,7 @@ import Spinner from "./Components/Spinner";
 import MovieCard from "./Components/MovieCard";
 import { useDebounce } from "react-use";
 import { getTrendingMovies, updateSearchCount } from "./appwrite";
+import MovieModal from "./Components/MovieModal";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
@@ -27,6 +28,33 @@ const App = () => {
   const [debounceSearchTerm, setDebounceSearchTerm] = useState("");
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [trendLoading, setTrendLoading] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
+  const genreMap = {
+    28: "Action",
+    12: "Adventure",
+    16: "Animation",
+    35: "Comedy",
+    80: "Crime",
+    99: "Documentary",
+    18: "Drama",
+    10751: "Family",
+    14: "Fantasy",
+    36: "History",
+    27: "Horror",
+    10402: "Music",
+    9648: "Mystery",
+    10749: "Romance",
+    878: "Science Fiction",
+    10770: "TV Movie",
+    53: "Thriller",
+    10752: "War",
+    37: "Western",
+  };
+
+  const convertGenres = (genreIds) => {
+    return genreIds.map((id) => genreMap[id] || "Unknown");
+  };
 
   useDebounce(
     () => {
@@ -154,20 +182,30 @@ const App = () => {
           ""
         ) : (
           trendingMovies.length > 0 && (
-            <section className="trending">
+            <section className="trending cursor-pointer">
               <h2>Trending Movies</h2>
 
               <ul>
                 {trendingMovies.map((movie, index) => (
-                  <li key={movie.$id}>
+                  <li key={movie.$id} onClick={() => setSelectedMovie(movie)}>
                     <p>{index + 1}</p>
-                    <img src={movie.poster_url} alt={movie.title} />
+                    <img src={movie.poster_path} alt={movie.title} />
                   </li>
                 ))}
               </ul>
             </section>
           )
         )}
+
+        {/* Modal for trending movies*/}
+        <MovieModal
+          onClose={() => setSelectedMovie(null)}
+          isOpen={!!selectedMovie}
+          movie={selectedMovie}
+          convertGenres={convertGenres}
+          options={options}
+        />
+        {/* End of Modal */}
 
         <section className="all-movies" ref={movieListRef}>
           <h2 className="mt-[40px]">Popular movies</h2>
@@ -182,7 +220,11 @@ const App = () => {
           ) : (
             <ul>
               {movieList.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
+                <MovieCard
+                  key={movie.id}
+                  movie={movie}
+                  selectMovie={() => setSelectedMovie(movie)}
+                />
               ))}
             </ul>
           )}

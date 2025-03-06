@@ -11,6 +11,7 @@ const client = new Client()
 const database = new Databases(client);
 
 export const updateSearchCount = async (searchTerm, movie) => {
+  const vga = Math.floor(movie.vote_average);
   try {
     const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
       Query.equal("searchTerm", searchTerm),
@@ -26,8 +27,16 @@ export const updateSearchCount = async (searchTerm, movie) => {
       await database.createDocument(DATABASE_ID, COLLECTION_ID, ID.unique(), {
         searchTerm,
         count: 1,
-        poster_url: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-        movie_id: movie.id,
+        poster_path: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+        id: movie.id,
+        title: movie.title,
+        backdrop_path: `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`,
+        original_language: movie.original_language,
+        overview: movie.overview,
+        release_date: movie.release_date,
+        vote_average: vga,
+        vote_count: movie.vote_count,
+        genre_ids: movie.genre_ids || [],
       });
     }
   } catch (error) {

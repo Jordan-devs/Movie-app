@@ -21,6 +21,8 @@
 
   --breakpoint-xs: 480px;
 
+  ----breakpoint-nmd: 884px;
+
   --background-image-hero-pattern: url("/BG.png");
 }
 
@@ -40,6 +42,10 @@
 
   h2 {
     @apply text-2xl font-bold text-white sm:text-3xl;
+  }
+
+  h3 {
+    @apply text-[1.3rem] text-light-200;
   }
 
   main {
@@ -86,6 +92,26 @@
 
   .logo {
     @apply w-20 h-20 mx-auto;
+  }
+
+  .modal-content {
+    @apply bg-[#0F0D23] p-8 rounded-lg shadow-light-100/10 w-[90%] m-[5%] h-[90%] shadow-[inset_0px_12px_32px_0px_rgba(206,206,251,0.19)] overflow-auto;
+  }
+
+  .modal-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .modal-header {
+    @apply flex flex-row justify-between items-center;
+
+    & h2 {
+      @apply text-white max-sm:text-2xl font-bold;
+    }
+  }
+
+  .m-gradient {
+    @apply shadow-[0px_0px_100px_0px_rgba(171,139,255,0.5)];
   }
 
   .btn {
