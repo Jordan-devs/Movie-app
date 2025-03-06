@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import Spinner from "./Spinner";
 
 const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
   if (!isOpen) return null;
 
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
   const [trailerUrl, setTrailerUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     title,
@@ -22,6 +24,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
   async function getTrailer(movieId) {
     const apiKey = API_KEY;
     const url = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`;
+    setIsLoading(true);
 
     try {
       const response = await fetch(url, options);
@@ -36,6 +39,8 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
     } catch (error) {
       console.error("Error fetching trailer:", error);
       setTrailerUrl(null);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -90,7 +95,9 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
               alt={title}
             />
             <div className="w-full h-[440px]max-sm:aspect-video rounded-md">
-              {trailerUrl ? (
+              {isLoading ? (
+                <Spinner />
+              ) : trailerUrl ? (
                 <iframe
                   className="w-full min-sm:h-[440px] rounded-md h-full"
                   src={trailerUrl}
