@@ -56,6 +56,10 @@ const App = () => {
     return genreIds.map((id) => genreMap[id] || "Unknown");
   };
 
+  const singleGenre = (genreId) => {
+    return genreMap[genreId] || "Unknown";
+  };
+
   useDebounce(
     () => {
       setDebounceSearchTerm(searchTerm);
@@ -224,6 +228,7 @@ const App = () => {
                   key={movie.id}
                   movie={movie}
                   selectMovie={() => setSelectedMovie(movie)}
+                  convertGenres={singleGenre}
                 />
               ))}
             </ul>

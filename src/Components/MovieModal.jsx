@@ -89,7 +89,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
               }
               alt={title}
             />
-            <div className="w-full h-[440px] rounded-md">
+            <div className="w-full aspect-video rounded-md">
               {trailerUrl ? (
                 <iframe
                   className="w-full h-full rounded-md"
@@ -190,8 +190,9 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
             <div className="flex max-xs:flex-col genre gap-[1rem] w-full relative mt-5 max-sm:mt-[2rem]">
               <h3 className="text-[1.15rem] text-light-200">Countries</h3>
               <p className="text-light-200 w-[60%] max-xs:w-full text-[1.1rem] min-xs:absolute left-[8rem]">
-                United Stated {"-•-"} Canada {"-•-"} UAE {"-•-"} Hungary {"-•-"}
-                Italy {"-•-"} New Zealand
+                United Stated <span>•</span> Canada <span>•</span> UAE{" "}
+                <span>•</span> Hungary <span>•</span>
+                Italy <span>•</span> New Zealand
               </p>
             </div>
 

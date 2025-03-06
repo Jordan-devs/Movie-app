@@ -1,10 +1,9 @@
 import React from "react";
 
-const MovieCard = ({ selectMovie, movie }) => {
+const MovieCard = ({ selectMovie, movie, convertGenres }) => {
   if (!movie) return null; // Avoids crashes if movie is undefined
 
-  const { title, vote_average, poster_path, release_date, original_language } =
-    movie;
+  const { title, vote_average, poster_path, release_date, genre_ids } = movie;
   return (
     <div className="movie-card cursor-pointer" onClick={selectMovie}>
       <img
@@ -24,7 +23,7 @@ const MovieCard = ({ selectMovie, movie }) => {
           </div>
 
           <span>•</span>
-          <p className="lang">{original_language}</p>
+          <p className="lang">{convertGenres(genre_ids[0])}</p>
 
           <span>•</span>
           <p className="year">
