@@ -31,10 +31,16 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
       const data = await response.json();
 
       // Find the first available video
-      const trailer = data.results[0];
+      const trailer = data.results.find(
+        (video) => video.type === "Trailer" && video.site === "YouTube"
+      );
 
       setTrailerUrl(
-        trailer ? `https://www.youtube.com/embed/${trailer.key}` : null
+        trailer
+          ? `https://www.youtube.com/embed/${trailer.key}`
+          : data.results[0]
+          ? `https://www.youtube.com/embed/${data.results[0].key}`
+          : null
       );
     } catch (error) {
       console.error("Error fetching trailer:", error);
@@ -96,7 +102,9 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
             />
             <div className="w-full h-[440px]max-sm:aspect-video rounded-md">
               {isLoading ? (
-                <div className="flex items-center justify-center"><Spinner /></div>        
+                <div className="flex items-center justify-center">
+                  <Spinner />
+                </div>
               ) : trailerUrl ? (
                 <iframe
                   className="w-full min-sm:h-[440px] rounded-md h-full"
@@ -147,7 +155,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
             <div className="flex max-xs:flex-col xs:items-center genre gap-[3rem] max-xs:gap-2 w-full relative max-xs:mb-[2rem]">
               <h3 className="text-[1.15rem] text-light-200">Genres</h3>
               <p className="text-light-200 left-[8rem] min-xs:absolute">
-                {convertGenres(genre_ids).map((genre, index) => (
+                {convertGenres(genre_ids || []).map((genre, index) => (
                   <span
                     key={index}
                     className="max-xs:flex items-center max-xs:flex-wrap max-xs:mb-1.5 text-white font-medium text-[1rem] py-2 px-5 bg-[#221F3D] rounded-md min-[480px]:mr-2"

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import Search from "./Components/Search";
 import Spinner from "./Components/Spinner";
 import MovieCard from "./Components/MovieCard";
@@ -18,6 +18,28 @@ const options = {
   },
 };
 
+const genreMap = {
+  28: "Action",
+  12: "Adventure",
+  16: "Animation",
+  35: "Comedy",
+  80: "Crime",
+  99: "Documentary",
+  18: "Drama",
+  10751: "Family",
+  14: "Fantasy",
+  36: "History",
+  27: "Horror",
+  10402: "Music",
+  9648: "Mystery",
+  10749: "Romance",
+  878: "Science Fiction",
+  10770: "TV Movie",
+  53: "Thriller",
+  10752: "War",
+  37: "Western",
+};
+
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
@@ -29,28 +51,6 @@ const App = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [trendLoading, setTrendLoading] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
-
-  const genreMap = {
-    28: "Action",
-    12: "Adventure",
-    16: "Animation",
-    35: "Comedy",
-    80: "Crime",
-    99: "Documentary",
-    18: "Drama",
-    10751: "Family",
-    14: "Fantasy",
-    36: "History",
-    27: "Horror",
-    10402: "Music",
-    9648: "Mystery",
-    10749: "Romance",
-    878: "Science Fiction",
-    10770: "TV Movie",
-    53: "Thriller",
-    10752: "War",
-    37: "Western",
-  };
 
   const convertGenres = (genreIds) => {
     return genreIds.map((id) => genreMap[id] || "Unknown");
@@ -128,37 +128,34 @@ const App = () => {
     loadTrendingMovies();
   }, []);
 
-  const nextPage = () => {
-    if (data.page < data.total_pages) {
+  const nextPage = useCallback(() => {
+    if (!isLoading && data.page < data.total_pages) {
       setPageNumber((prev) => {
         const newPage = prev + 1;
         fetchMovies(debounceSearchTerm, newPage);
         return newPage;
       });
-      setTimeout(() => {
-        handleScroll();
-      }, 1000);
     }
-  };
+  }, [isLoading, data.page, data.total_pages, debounceSearchTerm]);
 
-  const prevPage = () => {
-    if (data.page > 1) {
+  const prevPage = useCallback(() => {
+    if (!isLoading && data.page > 1) {
       setPageNumber((prev) => {
         const newPage = prev - 1;
         fetchMovies(debounceSearchTerm, newPage);
         return newPage;
       });
-      setTimeout(() => {
-        handleScroll();
-      }, 1000);
     }
-  };
+  }, [isLoading, data.page, debounceSearchTerm]);
 
+  // scroll refrencing
   const movieListRef = useRef(null);
 
-  const handleScroll = () => {
-    movieListRef.current.scrollIntoView({ behavior: "smooth" });
-  };
+  useEffect(() => {
+    if (!isLoading) {
+      movieListRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [isLoading]);
 
   return (
     <main>
@@ -217,7 +214,7 @@ const App = () => {
             <Spinner />
           ) : error ? (
             <p className="text-red-500">{error}</p>
-          ) : data?.results?.length === 0 ? (
+          ) : movieList.length === 0 ? (
             <p className="text-[1.3rem] text-white text-center">
               Movie not Found
             </p>
