@@ -96,7 +96,7 @@ const MovieModal = ({ convertGenres, onClose, isOpen, movie, options }) => {
             />
             <div className="w-full h-[440px]max-sm:aspect-video rounded-md">
               {isLoading ? (
-                <Spinner />
+                <div className="flex items-center justify-center"><Spinner /></div>        
               ) : trailerUrl ? (
                 <iframe
                   className="w-full min-sm:h-[440px] rounded-md h-full"
